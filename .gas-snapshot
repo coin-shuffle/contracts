@@ -1,1 +1,7 @@
-TestContract:testBar() (gas: 401)
+TestERC20Mock:testDecimals() (gas: 7746)
+TestEthereumUTXO:testDeposit(address) (runs: 256, μ: 136509, ~: 136509)
+TestEthereumUTXO:testGlobals() (gas: 44444)
+TestEthereumUTXO:testListUTXOs() (gas: 38379)
+TestEthereumUTXO:testListUTXOsAddress() (gas: 73743)
+TestEthereumUTXO:testTransfer() (gas: 392505)
+TestEthereumUTXO:testWithdraw() (gas: 77004)
