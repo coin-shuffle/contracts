@@ -1,2 +1,5 @@
+[profile.default]
+solc = '0.8.19'
+
 [profile.ci.fuzz]
 runs = 10_000

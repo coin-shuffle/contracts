@@ -1,3 +1,11 @@
 [submodule "lib/forge-std"]
 	path = lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
+	branch = v4.8.1
+[submodule "lib/dev-modules"]
+	path = lib/dev-modules
+	url = https://github.com/dl-solidity-library/dev-modules
+	branch = 2.3.0
