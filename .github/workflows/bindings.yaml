@@ -18,6 +18,7 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1
 
       - name: Checkout bindings
+        uses: actions/checkout@v2
         repository: coin-shuffle/contracts-bindings-rs
         path: bindings
 
