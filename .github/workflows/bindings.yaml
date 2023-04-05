@@ -40,4 +40,4 @@ jobs:
           destination-github-username: "coin-shuffle"
           destination-repository-name: "contracts-bindings-rs"
           user-email: "kirillbaybula@gmail.com"
-          target-branch: ${{ github.ref_name }}
+          target-branch: "generated"
