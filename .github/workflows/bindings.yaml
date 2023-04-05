@@ -19,8 +19,9 @@ jobs:
 
       - name: Checkout bindings
         uses: actions/checkout@v2
-        repository: coin-shuffle/contracts-bindings-rs
-        path: bindings
+        with:
+          repository: coin-shuffle/contracts-bindings-rs
+          path: bindings
 
       - name: Generate bindings
         run: forge bind --bindings-path ./bindings --root ./ --crate-name contracts-bindings
