@@ -49,7 +49,7 @@ jobs:
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.5.0
         with:
-          ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
+          ssh-private-key: ${{ secrets.SSH_BINDINGS_DEPLOY_KEY }}
 
       - name: Create tag
         env:
