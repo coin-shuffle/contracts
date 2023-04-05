@@ -54,8 +54,8 @@ jobs:
       - name: Create tag
         env:
           TAG: ${{ steps.get_tag.outputs.tag }}
-          run: |
-            git config --local user.email kirillbaybula@gmail.com"
-            git config --local user.name "coin-shuffle"
-            git tag -a $TAG -m "Version $TAG"
-            git push origin $TAG
+        run: |
+          git config --local user.email kirillbaybula@gmail.com"
+          git config --local user.name "coin-shuffle"
+          git tag -a $TAG -m "Version $TAG"
+          git push origin $TAG
