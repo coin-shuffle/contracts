@@ -1,0 +1,35 @@
+name: bindings generation
+on:
+  push:
+    tags: [v*]
+  pull_request:
+
+env:
+  FOUNDRY_PROFILE: ci
+
+jobs:
+  run-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout contracts
+        uses: actions/checkout@v2
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Checkout bindings
+        repository: coin-shuffle/contracts-bindings-rs
+        path: bindings
+
+      - name: Generate bindings
+        run: forge bind --bindings-path ./bindings --root ./ --crate-name contracts-bindings
+
+      - name: Push bindings to repo
+        uses: cpina/github-action-push-to-another-repository@main
+
+        with:
+          source-directory: bindings/
+          destination-github-username: "coin-shuffle"
+          destination-repository-name: "contracts-bindings-rs"
+          user-email: "kirillbaybula@gmail.com"
+          target-branch: "generated"
