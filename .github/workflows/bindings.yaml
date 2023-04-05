@@ -31,7 +31,7 @@ jobs:
         run: forge bind --bindings-path ./contracts-bindings-rs --root ./ --crate-name contracts-bindings
 
       - name: Push bindings to repo
-        uses: cpina/github-action-push-to-another-repository
+        uses: cpina/github-action-push-to-another-repository@main
         with:
           source-directory: ./contracts-bindings-rs
           destination-github-username: "coin-shuffle"
