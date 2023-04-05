@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout contracts
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
