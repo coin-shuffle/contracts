@@ -57,7 +57,7 @@ jobs:
         env:
           TAG: ${{ steps.previoustag.outputs.tag }}
         run: |
-          git config --local user.email kirillbaybula@gmail.com"
+          git config --local user.email "kirillbaybula@gmail.com"
           git config --local user.name "coin-shuffle"
-          git tag -a $TAG -m "Version $TAG"
+          git tag -a $TAG -m "Add tag $TAG"
           git push origin $TAG
