@@ -34,10 +34,10 @@ jobs:
       - name: Push bindings to repo
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_BINDINGS_DEPLOY_KEY }}
         with:
           source-directory: ./bindings/contracts-bindings-rs
           destination-github-username: "coin-shuffle"
           destination-repository-name: "contracts-bindings-rs"
           user-email: "kirillbaybula@gmail.com"
-          target-branch: "generated"
+          target-branch: ${{ github.ref_name }}
