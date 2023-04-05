@@ -41,3 +41,21 @@ jobs:
           destination-repository-name: "contracts-bindings-rs"
           user-email: "kirillbaybula@gmail.com"
           target-branch: "generated"
+
+      - name: Get current tag
+        id: get_tag
+        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
+
+      - name: Create tag
+        env:
+          TAG: ${{ steps.get_tag.outputs.tag }}
+          run: |
+            git config --local user.email kirillbaybula@gmail.com"
+            git config --local user.name "coin-shuffle"
+            git tag -a $TAG -m "Version $TAG"
+            git push origin $TAG
