@@ -25,6 +25,9 @@ jobs:
           repository: coin-shuffle/contracts-bindings-rs
           path: bindings
 
+      - name: Build contracts
+        run: forge build --root ./
+
       - name: Generate bindings
         run: forge bind --bindings-path ./bindings --root ./ --crate-name contracts-bindings
 
