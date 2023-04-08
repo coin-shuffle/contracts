@@ -31,8 +31,14 @@ jobs:
       - name: Generate bindings
         run: forge bind --bindings-path ./bindings/contracts-bindings-rs --root ./ --crate-name contracts-bindings
 
+      - name: "Get Previous tag"
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: v0.1.0
+
       - name: Push bindings to repo
-        uses: cpina/github-action-push-to-another-repository@v1.6
+        uses: Velnbur/github-action-push-to-another-repository@main
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_BINDINGS_DEPLOY_KEY }}
         with:
@@ -41,26 +47,4 @@ jobs:
           destination-repository-name: "contracts-bindings-rs"
           user-email: "kirillbaybula@gmail.com"
           target-branch: "generated"
-
-      - name: "Get Previous tag"
-        id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-        with:
-          fallback: v0.1.0
-
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.5.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_BINDINGS_DEPLOY_KEY }}
-
-      - name: Create tag
-        env:
-          TAG: ${{ steps.previoustag.outputs.tag }}
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: |
-          cd ./bindings/contracts-bindings-rs
-          git config --local user.email "kirillbaybula@gmail.com"
-          git config --local user.name "coin-shuffle"
-
-          git tag -a $TAG -m "Add tag $TAG"
-          git push origin $TAG
+          tag-name: ${{ steps.previoustag.outputs.tag }}
