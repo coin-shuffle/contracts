@@ -46,7 +46,7 @@ jobs:
         id: previoustag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
         with:
-          fallback: 0.1.0
+          fallback: v0.1.0
 
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.5.0
@@ -56,8 +56,11 @@ jobs:
       - name: Create tag
         env:
           TAG: ${{ steps.previoustag.outputs.tag }}
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
+          cd ./bindings/contracts-bindings-rs
           git config --local user.email "kirillbaybula@gmail.com"
           git config --local user.name "coin-shuffle"
+
           git tag -a $TAG -m "Add tag $TAG"
           git push origin $TAG
