@@ -1,0 +1,49 @@
+name: bindings generation
+on:
+  push:
+    tags: [v*]
+
+env:
+  FOUNDRY_PROFILE: ci
+
+jobs:
+  run-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout contracts
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Checkout bindings
+        uses: actions/checkout@v2
+        with:
+          repository: coin-shuffle/contracts-bindings-rs
+          path: bindings
+
+      - name: Build contracts
+        run: forge build --root ./
+
+      - name: Generate bindings
+        run: forge bind --bindings-path ./bindings/contracts-bindings-rs --root ./ --crate-name contracts-bindings
+
+      - name: "Get Previous tag"
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: v0.1.0
+
+      - name: Push bindings to repo
+        uses: Velnbur/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_BINDINGS_DEPLOY_KEY }}
+        with:
+          source-directory: ./bindings/contracts-bindings-rs
+          destination-github-username: "coin-shuffle"
+          destination-repository-name: "contracts-bindings-rs"
+          user-email: "kirillbaybula@gmail.com"
+          target-branch: "generated"
+          tag-name: ${{ steps.previoustag.outputs.tag }}
