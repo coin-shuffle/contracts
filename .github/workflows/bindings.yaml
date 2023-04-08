@@ -2,7 +2,6 @@ name: bindings generation
 on:
   push:
     tags: [v*]
-  pull_request:
 
 env:
   FOUNDRY_PROFILE: ci
