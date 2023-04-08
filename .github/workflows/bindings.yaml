@@ -28,7 +28,7 @@ jobs:
         run: forge build --root ./
 
       - name: Generate bindings
-        run: forge bind --bindings-path ./bindings/contracts-bindings-rs --root ./ --crate-name contracts-bindings
+        run: forge bind --bindings-path ./bindings/contracts-bindings-rs --root ./ --crate-name coin-shuffle-contracts-bindings
 
       - name: "Get Previous tag"
         id: previoustag
