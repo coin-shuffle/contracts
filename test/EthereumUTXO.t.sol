@@ -70,7 +70,6 @@ contract TestEthereumUTXO is Test {
     }
 
     function testGlobals() public {
-        vm.assume(utxo.MAX_UTXOS() == 10);
         vm.assume(utxo.getUTXOsLength() == 9);
 
         vm.assume(utxo.getUTXOById(0).owner == acc1);
@@ -94,10 +93,6 @@ contract TestEthereumUTXO is Test {
         vm.expectRevert("EthereumUTXO: empty outputs");
         IUTXO.Output[] memory array = new IUTXO.Output[](0);
         utxo.deposit(erc20Token, array);
-
-        vm.expectRevert("EthereumUTXO: too many outputs");
-        IUTXO.Output[] memory array2 = new IUTXO.Output[](11);
-        utxo.deposit(erc20Token, array2);
 
         IUTXO.Output[] memory array3 = new IUTXO.Output[](1);
         array3[0] = IUTXO.Output({owner: acc1, amount: 1 ether});

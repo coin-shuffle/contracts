@@ -10,19 +10,16 @@ import "../libs/UTXOArray.sol";
 import "../libs/UTXOPaginator.sol";
 
 contract EthereumUTXO is IUTXO {
-    using ECDSA for bytes;
     using ECDSA for bytes32;
+    using ECDSA for bytes;
 
     using UTXOArray for UTXOArray.Array;
     using Paginator for UTXOArray.Array;
-
-    uint256 public constant MAX_UTXOS = 10;
 
     UTXOArray.Array internal UTXOs;
 
     function deposit(address token_, Output[] calldata outputs_) external override {
         require(outputs_.length > 0, "EthereumUTXO: empty outputs");
-        require(outputs_.length <= MAX_UTXOS, "EthereumUTXO: too many outputs");
 
         uint256 amount_ = _getTotalAmount(outputs_);
 
@@ -78,8 +75,12 @@ contract EthereumUTXO is IUTXO {
 
             require(token_ == utxo_.token, "EthereumUTXO: UTXO token mismatch");
             require(!utxo_.isSpent, "EthereumUTXO: UTXO has been spent");
-
-            if (utxo_.owner != keccak256(abi.encodePacked(inputs_[i].id, data_)).toEthSignedMessageHash().recover(inputs_[i].signature)) {
+            if (
+                utxo_.owner
+                    != keccak256(abi.encodePacked(inputs_[i].id, data_)).toEthSignedMessageHash().recover(
+                        inputs_[i].signature
+                    )
+            ) {
                 revert InvalidSignature(utxo_.owner, inputs_[i].id);
             }
 
